@@ -1,0 +1,16 @@
+docker container ls -a
+docker container rm f8fcea325c5c
+
+#Download mongo db image
+docker pull mongo
+
+#Start mongodb for first time
+docker run -d --name mongodb mongo
+docker run -d -p 27017:27017 --name mongodb mongo
+
+#Enter terminal of mongodb
+docker exec -it mongodb bash
+
+#Start and stop
+docker stop containerId
+docker start containerId
