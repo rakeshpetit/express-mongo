@@ -33,6 +33,14 @@ const Todo = mongoose.model('Todo', {
 //     console.log('Post delete todos from db', doc)
 // })
 
+// Todo.findOneAndRemove({ _id: '5d6e6c45635acf1c7bec256a' }).then((doc) => {
+//     console.log('Post delete todos from db', doc)
+// })
+
+// Todo.findByIdAndRemove('5d6e79e62484821f097ebeea').then((doc) => {
+//     console.log('Post delete todos from db', doc)
+// })
+
 //Find collections
 Todo.find().then((doc) => {
     console.log('All todos from db', doc)
