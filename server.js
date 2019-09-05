@@ -83,6 +83,20 @@ app.patch('/todos/:id', (req, res) => {
     });
 })
 
+
+app.post('/users', (req, res) => {
+    const { email, password } = req.body
+    const user = new User({
+        email,
+        password
+    })
+    user.save().then((user) => {
+        res.send(user)
+    }).catch((err) => {
+        res.status(400).send(err)
+    });
+})
+
 app.listen(3000, () => {
     console.log('Server on port 3000')
 })
