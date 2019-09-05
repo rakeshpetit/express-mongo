@@ -59,6 +59,30 @@ app.delete('/todos/:id', (req, res) => {
     });
 })
 
+app.patch('/todos/:id', (req, res) => {
+    const id = req.params.id
+    const { text } = req.body
+    let { completed } = req.body
+    if(!ObjectID.isValid(id)) {
+        return res.status(404).send()
+    }
+    let completedAt = null
+    if(completed) {
+        completedAt = new Date().getTime()
+    }
+    else {
+        completed = false
+    }
+    Todo.findByIdAndUpdate(id, {$set: { text, completed, completedAt }}, {new: true}).then((todo) => {
+        if(!todo){
+            return res.status(404).send()
+        }
+        res.send({todo})
+    }).catch((err) => {
+        res.status(400).send(err)
+    });
+})
+
 app.listen(3000, () => {
     console.log('Server on port 3000')
 })
