@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+// const User = require('../models/user')
 // import mongoose from 'mongoose'
+import User from '../models/user'
 
 mongoose.Promise = global.Promise
 
@@ -41,7 +43,21 @@ const Todo = mongoose.model('Todo', {
 //     console.log('Post delete todos from db', doc)
 // })
 
+// Todo.findByIdAndRemove('5d6e79e62484821f097ebeea').then((doc) => {
+//     console.log('Post delete todos from db', doc)
+// })
+
 //Find collections
-Todo.find().then((doc) => {
-    console.log('All todos from db', doc)
+// Todo.find().then((doc) => {
+//     console.log('All todos from db', doc)
+// })
+
+
+// User.findOneAndRemove({email: 'rakesh2@example.com'}).then((doc) => {
+//     console.log('Post delete users from db', doc)
+// })
+
+//Find users
+User.find().then((user) => {
+    console.log('All users from db', JSON.stringify(user))
 })

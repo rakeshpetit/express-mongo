@@ -91,8 +91,11 @@ app.post('/users', (req, res) => {
         password
     })
     user.save().then((user) => {
-        res.send(user)
-    }).catch((err) => {
+        return user.generateAuthToken()
+    }).then((token) => {
+        res.header('x-auth', token).send(user)
+    })
+    .catch((err) => {
         res.status(400).send(err)
     });
 })
