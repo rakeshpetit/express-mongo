@@ -5,7 +5,7 @@ import { ObjectID } from "mongodb";
 import mongoose from "./db/mongoose";
 import Todo from "./models/todo";
 import User from "./models/user";
-import { authenticate } from "./middleware/authenticate";
+import { authenticate, login } from "./middleware/authenticate";
 
 const app = express();
 
@@ -116,6 +116,10 @@ app.post("/users", (req, res) => {
 });
 
 app.get("/users/me", authenticate, (req, res) => {
+    res.send(req.user);
+});
+
+app.post("/users/login", login, (req, res) => {
     res.send(req.user);
 });
 
