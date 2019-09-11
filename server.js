@@ -5,6 +5,7 @@ import { ObjectID } from "mongodb";
 import mongoose from "./db/mongoose";
 import Todo from "./models/todo";
 import User from "./models/user";
+import { authenticate } from "./middleware/authenticate";
 
 const app = express();
 
@@ -114,18 +115,8 @@ app.post("/users", (req, res) => {
         });
 });
 
-app.get("/users/me", (req, res) => {
-    const token = req.header("x-auth");
-    User.findByToken(token)
-        .then(user => {
-            if (!user) {
-                return Promise.reject();
-            }
-            res.send(user);
-        })
-        .catch(e => {
-            res.status(401).send();
-        });
+app.get("/users/me", authenticate, (req, res) => {
+    res.send(req.user);
 });
 
 app.listen(3000, () => {
