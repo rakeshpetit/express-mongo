@@ -48,8 +48,15 @@ const authenticate = (req, res, next) => {
 const login = (req, res, next) => {
     const { email, password } = req.body;
     User.findByCredentials(email, password)
-        .then(result => {
-            res.send(result);
+        .then(user => {
+            return user.generateAuthToken().then((token) => {
+                req.user = user
+                req.token = token
+                return Promise.resolve()
+            })
+        })
+        .then(() => {
+            res.header('x-auth', req.token).send(req.user)
         })
         .catch(err => {
             res.status(err).send();

@@ -45,9 +45,20 @@ UserSchema.methods.generateAuthToken = function() {
     const token = jwt
         .sign({ _id: this._id.toHexString(), access }, "abc123")
         .toString();
-    this.tokens.push({ access, token });
+    const existingTokenIndex = this.tokens.findIndex(token => token.access === access);
+    const newToken = { access, token };
+    if (existingTokenIndex >= 0) this.tokens[existingTokenIndex] = newToken;
+    else this.tokens.push(newToken);
     return this.save().then(() => {
         return token;
+    });
+};
+
+UserSchema.methods.removeToken = function(token) {
+    return this.update({
+        $pull: {
+            tokens: { token }
+        }
     });
 };
 
